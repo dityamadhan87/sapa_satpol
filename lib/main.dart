@@ -1,6 +1,6 @@
 import 'package:first_flutter/HomePage/HomePage.dart';
-import 'package:first_flutter/LoginSection/Login.dart';
-import 'package:first_flutter/RegisterSection/Register.dart';
+import 'package:first_flutter/LaporanSection/LaporanPage.dart';
+import 'package:first_flutter/SplashScreen/SplashScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
       ),
-      home: HomePage(),
+      home: SplashScreen(),
       debugShowCheckedModeBanner: false
     );
   }

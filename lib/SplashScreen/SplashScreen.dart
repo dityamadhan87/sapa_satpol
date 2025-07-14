@@ -6,13 +6,8 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final width = size.width;
-
-    /// Fungsi untuk menghitung font yang proporsional
-    double scaleFont(double size) {
-      return size * (width / 600); // 375 adalah lebar desain referensi
-    }
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: const Color(0xFF5F5F54),
@@ -31,24 +26,24 @@ class SplashScreen extends StatelessWidget {
                         children: [
                           SvgPicture.asset(
                             'assets/images/logo_sapa_satpol.svg',
-                            width: size.width * 0.25,
+                            width: screenWidth * 0.3,
                             fit: BoxFit.contain,
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: screenWidth * 0.02),
                           Text(
                             'SAPA SATPOL',
                             style: TextStyle(
-                              fontSize: scaleFont(30),
+                              fontSize: screenWidth * 0.07,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          const SizedBox(height: 8),
+                          SizedBox(height: screenWidth * 0.02),
                           Text(
                             'Suaramu, Aksimu untuk Kota Batu',
                             style: TextStyle(
-                              fontSize: scaleFont(20),
+                              fontSize: screenWidth * 0.04,
                               color: Colors.white,
                             ),
                             textAlign: TextAlign.center,
@@ -57,32 +52,32 @@ class SplashScreen extends StatelessWidget {
                       ),
                       const Spacer(),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24.0,
-                          vertical: 20.0,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.05,
+                          vertical: screenHeight * 0.02,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset(
                               'assets/images/logo_batu.png',
-                              width: 21,
-                              height: 26,
+                              width: screenWidth * 0.1,
+                              height: screenWidth * 0.1,
                               fit: BoxFit.contain,
                             ),
-                            const SizedBox(width: 8),
-                            SvgPicture.asset(
-                              'assets/images/logo_satpol.svg',
-                              width: 21,
-                              height: 26,
+                            SizedBox(width: screenWidth * 0.02),
+                            Image.asset(
+                              'assets/images/logo_satpol.png',
+                              width: screenWidth * 0.1,
+                              height: screenWidth * 0.1,
                               fit: BoxFit.contain,
                             ),
-                            const SizedBox(width: 12),
+                            SizedBox(width: screenWidth * 0.02),
                             Flexible(
                               child: Text(
                                 'Dikelola di bawah Satuan Polisi Pamong Praja Kota Batu dan Pemerintah Kota Batu',
                                 style: TextStyle(
-                                  fontSize: scaleFont(15),
+                                  fontSize: screenWidth * 0.035,
                                   color: Colors.white,
                                 ),
                                 textAlign: TextAlign.center,
