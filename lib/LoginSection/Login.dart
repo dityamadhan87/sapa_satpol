@@ -1,3 +1,6 @@
+import 'package:first_flutter/Components/CustomButton.dart';
+import 'package:first_flutter/LoginSection/HeaderSection.dart';
+import 'package:first_flutter/Components/LabelledTextField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -8,262 +11,151 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-
-    double buttonHeight(BuildContext context) {
-      final size = MediaQuery.of(context).size;
-      final orientation = MediaQuery.of(context).orientation;
-
-      // nilai dasar
-      double h;
-
-      if (orientation == Orientation.portrait) {
-        h = size.height * 0.065;
-        if (h < 48) h = 48; // tetap ada batas minimal
-      } else {
-        // landscape: gunakan nilai tetap + tambahan
-        h = size.height * 0.13; // misalnya 56, atau nilai yang kamu suka
-      }
-
-      return h;
-    }
-
-    double googleIconHeight(BuildContext context) {
-      final size = MediaQuery.of(context).size;
-      final orientation = MediaQuery.of(context).orientation;
-
-      if (orientation == Orientation.portrait) {
-        double h = size.height * 0.03; // misalnya
-        if (h < 24) h = 24; // minimal
-        return h;
-      } else {
-        return 32; // landscape → tetap lebih besar
-      }
-    }
+    final isPotrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
 
     return Scaffold(
+      backgroundColor: const Color(0xFF646452),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Bagian atas
-            Container(
-              width: double.infinity,
-              color: const Color(0xFF646452),
-              padding: EdgeInsets.symmetric(vertical: screenHeight * 0.05),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    'assets/images/logo_sapa_satpol.svg',
-                    width: screenWidth * 0.2,
-                  ),
-                  SizedBox(height: screenHeight * 0.02),
-                  Text(
-                    "Login",
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.07,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.01),
-                  Text(
-                    "Kami senang bertemu Anda lagi!",
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.04,
-                      color: Colors.white70,
-                    ),
-                  ),
-                ],
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: screenHeight),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              // Bagian atas
+              HeaderSection(
+                isPortrait: isPotrait,
+                screenWidth: screenWidth,
               ),
-            ),
 
-            // Bagian bawah
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(
-                screenWidth * 0.05,
-              ), // proporsional padding
-              color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Email
-                  Text.rich(
-                    TextSpan(
-                      text: 'Email',
-                      children: [
-                        TextSpan(
-                          text: ' *',
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: screenWidth * 0.035,
-                          ),
-                        ),
-                      ],
-                    ),
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.04, // proporsional
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.01),
-                  TextField(
-                    decoration: InputDecoration(
+              // Bagian bawah
+              Container(
+                color: Colors.white,
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth * 0.05,
+                  vertical: screenWidth * 0.07,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    // Email
+                    LabelledTextField(
+                      label: 'Email',
+                      screenWidth: screenWidth,
                       hintText: 'Masukkan email',
-                      hintStyle: TextStyle(fontSize: screenWidth * 0.035),
-                      contentPadding: EdgeInsets.symmetric(
-                        vertical: screenHeight * 0.015,
-                        horizontal: screenWidth * 0.04,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                      ),
+                      isPortrait: isPotrait,
+                      obscureText: false,
                     ),
-                  ),
 
-                  SizedBox(height: screenHeight * 0.02),
+                    SizedBox(height: screenWidth * 0.05),
 
-                  // Kata Sandi
-                  Text.rich(
-                    TextSpan(
-                      text: 'Kata Sandi',
-                      children: [
-                        TextSpan(
-                          text: ' *',
+                    // Kata Sandi
+                    LabelledTextField(
+                      label: 'Kata Sandi',
+                      screenWidth: screenWidth,
+                      hintText: 'Masukkan kata sandi',
+                      isPortrait: isPotrait,
+                      obscureText: true,
+                    ),
+
+                    SizedBox(height: screenWidth * 0.03),
+
+                    // Lupa kata sandi
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Lupa Kata Sandi?',
                           style: TextStyle(
-                            color: Colors.red,
+                            color: Color(0xFF647961),
                             fontSize: screenWidth * 0.035,
                           ),
                         ),
+                      ),
+                    ),
+
+                    SizedBox(height: screenWidth * 0.05),
+
+                    // Tombol Login
+                    CustomButton(
+                      isOutlined: false,
+                      label: 'Login',
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/home');
+                      },
+                      height: isPotrait ? screenWidth * 0.13 : screenWidth * 0.09,
+                      borderRadius: screenWidth * 0.03,
+                      fontSize: screenWidth * 0.045,
+                      backgroundColor: const Color(0xFF646452),
+                    ),
+
+                    SizedBox(height: screenWidth * 0.03),
+
+                    // Atau dengan Google
+                    Row(
+                      children: [
+                        const Expanded(child: Divider()),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.02,
+                          ),
+                          child: Text(
+                            'atau',
+                            style: TextStyle(fontSize: screenWidth * 0.035),
+                          ),
+                        ),
+                        const Expanded(child: Divider()),
                       ],
                     ),
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.04,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.01),
-                  TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: 'Masukkan kata sandi',
-                      hintStyle: TextStyle(fontSize: screenWidth * 0.035),
-                      contentPadding: EdgeInsets.symmetric(
-                        vertical: screenHeight * 0.015,
-                        horizontal: screenWidth * 0.04,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                      ),
-                    ),
-                  ),
 
-                  SizedBox(height: screenHeight * 0.005),
+                    SizedBox(height: screenWidth * 0.03),
 
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Lupa Kata Sandi?',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: screenWidth * 0.035,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: screenHeight * 0.015),
-
-                  // Tombol Login
-                  SizedBox(
-                    width: double.infinity,
-                    height: buttonHeight(context),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF646452),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                        ),
-                      ),
-                      child: Text(
-                        'Login',
-                        style: TextStyle(
-                          fontSize: screenWidth * 0.045,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: screenHeight * 0.02),
-
-                  Row(
-                    children: [
-                      const Expanded(child: Divider()),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth * 0.02,
-                        ),
-                        child: Text(
-                          'atau',
-                          style: TextStyle(fontSize: screenWidth * 0.035),
-                        ),
-                      ),
-                      const Expanded(child: Divider()),
-                    ],
-                  ),
-
-                  SizedBox(height: screenHeight * 0.02),
-
-                  SizedBox(
-                    width: double.infinity,
-                    height: buttonHeight(context),
-                    child: OutlinedButton.icon(
+                    // Tombol Masuk dengan Google
+                    CustomButton(
+                      isOutlined: true,
+                      label: 'Masuk dengan Google',
                       onPressed: () {},
                       icon: SvgPicture.asset(
                         'assets/images/devicon_google.svg',
-                        height: googleIconHeight(context),
+                        height: screenWidth * 0.05,
                       ),
-                      label: Text(
-                        'Masuk dengan Google',
-                        style: TextStyle(fontSize: screenWidth * 0.04),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                        ),
-                      ),
+                      height: isPotrait ? screenWidth * 0.13 : screenWidth * 0.09,
+                      borderRadius: screenWidth * 0.03,
+                      fontSize: screenWidth * 0.04,
                     ),
-                  ),
 
-                  SizedBox(height: screenHeight * 0.03),
+                    SizedBox(height: screenWidth * 0.03),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Belum punya akun?",
-                        style: TextStyle(fontSize: screenWidth * 0.035),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Daftar',
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: screenWidth * 0.038,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Belum punya akun?",
+                          style: TextStyle(fontSize: screenWidth * 0.035),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, '/register');
+                          },
+                          child: Text(
+                            'Daftar',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: screenWidth * 0.035,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

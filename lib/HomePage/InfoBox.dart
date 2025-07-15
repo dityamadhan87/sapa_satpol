@@ -7,14 +7,13 @@ class InfoBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(screenWidth * 0.03), // responsif padding
+      padding: EdgeInsets.all(screenWidth * 0.03),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(screenWidth * 0.02), // radius
+        borderRadius: BorderRadius.circular(screenWidth * 0.02), 
       ),
       child: Row(
         children: [
@@ -24,7 +23,7 @@ class InfoBox extends StatelessWidget {
             width: screenWidth * 0.15,
             height: screenWidth * 0.15,
           ),
-          SizedBox(width: screenWidth * 0.03), // jarak
+          SizedBox(width: screenWidth * 0.03),
 
           // Teks
           Expanded(
@@ -38,7 +37,7 @@ class InfoBox extends StatelessWidget {
                     fontSize: screenWidth * 0.04,
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.005),
+                SizedBox(height: screenWidth * 0.01),
                 Text(
                   'Sistem Administrasi Pelaporan Satuan Polisi Pamong Praja Kota Batu',
                   style: TextStyle(

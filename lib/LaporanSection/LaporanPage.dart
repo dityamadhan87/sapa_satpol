@@ -1,4 +1,5 @@
 import 'package:first_flutter/LaporanSection/FullWidthButton.dart';
+import 'package:first_flutter/LaporanSection/MenuDimension.dart';
 import 'package:first_flutter/LaporanSection/MenuItem.dart';
 import 'package:flutter/material.dart';
 
@@ -15,16 +16,19 @@ class _LaporanPageState extends State<LaporanPage> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
+    final isPotrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
 
+    final dimensions = MenuDimensions(screenWidth, isPotrait);
+    
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        toolbarHeight: screenWidth * 0.2,
+        toolbarHeight: (isPotrait ? screenWidth * 0.2 : screenWidth * 0.13),
         title: Text(
           "Laporan",
           style: TextStyle(
-            fontSize: screenWidth * 0.06,
+            fontSize: (isPotrait ? screenWidth * 0.06 : screenWidth * 0.045),
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
@@ -34,11 +38,9 @@ class _LaporanPageState extends State<LaporanPage> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(
-            screenWidth * 0.08,
-            screenHeight * 0.04,
-            screenWidth * 0.08,
-            screenHeight * 0.05,
+          padding: EdgeInsets.symmetric(
+            horizontal: screenWidth * 0.06,
+            vertical: screenWidth * 0.05,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -47,50 +49,60 @@ class _LaporanPageState extends State<LaporanPage> {
 
               // === Menu Navigasi Atas ===
               Container(
-                padding: EdgeInsets.symmetric(vertical: screenHeight * 0.03),
-                margin: EdgeInsets.only(bottom: screenHeight * 0.03),
+                padding: EdgeInsets.symmetric(
+                  vertical: (isPotrait
+                      ? screenWidth * 0.03
+                      : screenWidth * 0.03),
+                ),
                 decoration: BoxDecoration(
                   color: const Color(0xFFECECE8),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    MenuItem(
-                      icon: Icons.note_add,
-                      label: 'Pengajuan\nLaporan',
-                      isActive: activeMenu == 'Pengajuan Laporan',
-                      onTap: () {
-                        setState(() {
-                          activeMenu = 'Pengajuan Laporan';
-                        });
-                      },
-                    ),
-                    MenuItem(
-                      icon: Icons.inbox,
-                      label: 'Laporan\nMasuk',
-                      isActive: activeMenu == 'Laporan Masuk',
-                      onTap: () {
-                        setState(() {
-                          activeMenu = 'Laporan Masuk';
-                        });
-                      },
-                    ),
-                    MenuItem(
-                      icon: Icons.history,
-                      label: 'Riwayat\nLaporan',
-                      isActive: activeMenu == 'Riwayat Laporan',
-                      onTap: () {
-                        setState(() {
-                          activeMenu = 'Riwayat Laporan';
-                        });
-                      },
-                    ),
-                  ],
+
+                child: SizedBox(
+                  height: dimensions.sizedBoxHeight,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      MenuItem(
+                        dimensions: dimensions,
+                        icon: Icons.note_add,
+                        label: 'Pengajuan\nLaporan',
+                        isActive: activeMenu == 'Pengajuan Laporan',
+                        onTap: () {
+                          setState(() {
+                            activeMenu = 'Pengajuan Laporan';
+                          });
+                        },
+                      ),
+                      MenuItem(
+                        dimensions: dimensions,
+                        icon: Icons.inbox,
+                        label: 'Laporan\nMasuk',
+                        isActive: activeMenu == 'Laporan Masuk',
+                        onTap: () {
+                          setState(() {
+                            activeMenu = 'Laporan Masuk';
+                          });
+                        },
+                      ),
+                      MenuItem(
+                        dimensions: dimensions,
+                        icon: Icons.history,
+                        label: 'Riwayat\nLaporan',
+                        isActive: activeMenu == 'Riwayat Laporan',
+                        onTap: () {
+                          setState(() {
+                            activeMenu = 'Riwayat Laporan';
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
 
-              SizedBox(height: screenWidth * 0.02),
+              SizedBox(height: screenWidth * 0.04),
 
               // === Konten Dinamis ===
               _buildContent(),
@@ -102,18 +114,48 @@ class _LaporanPageState extends State<LaporanPage> {
   }
 
   Widget _buildContent() {
+    final screenWidth = MediaQuery.of(context).size.width;
     switch (activeMenu) {
       case 'Pengajuan Laporan':
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          spacing: screenWidth * 0.04,
           children: [
-            FullWidthButton(label: 'Kransos'),
-            FullWidthButton(label: 'Pamwal'),
-            FullWidthButton(label: 'Pengamanan'),
-            FullWidthButton(label: 'Perizinan'),
-            FullWidthButton(label: 'Piket'),
-            FullWidthButton(label: 'PKL'),
-            FullWidthButton(label: 'Reklame'),
+            FullWidthButton(
+              label: 'Kransos',
+              onTap: () {
+              },
+            ),
+            FullWidthButton(
+              label: 'Pamwal',
+              onTap: () {
+              },
+            ),
+            FullWidthButton(
+              label: 'Pengamanan',
+              onTap: () {
+              },
+            ),
+            FullWidthButton(
+              label: 'Perizinan',
+              onTap: () {
+              },
+            ),
+            FullWidthButton(
+              label: 'Piket',
+              onTap: () {
+              },
+            ),
+            FullWidthButton(
+              label: 'PKL',
+              onTap: () {
+              },
+            ),
+            FullWidthButton(
+              label: 'Reklame',
+              onTap: () {
+              },
+            ),
           ],
         );
       case 'Laporan Masuk':

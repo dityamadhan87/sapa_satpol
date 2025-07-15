@@ -12,7 +12,10 @@ class BeritaItem extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Padding(
-      padding: EdgeInsets.only(bottom: screenHeight * 0.015),
+      padding: EdgeInsets.symmetric(
+        vertical: screenHeight * 0.01,
+        horizontal: screenWidth * 0.01,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -21,7 +24,7 @@ class BeritaItem extends StatelessWidget {
             child: Image.asset(
               berita.imagePath,
               width: screenWidth * 0.25,
-              height: screenWidth * 0.25,
+              height: screenWidth * 0.2,
               fit: BoxFit.cover,
             ),
           ),
@@ -37,7 +40,7 @@ class BeritaItem extends StatelessWidget {
                     fontSize: screenWidth * 0.04,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: screenWidth * 0.02),
                 Text(
                   berita.deskripsi,
                   style: TextStyle(
@@ -45,7 +48,7 @@ class BeritaItem extends StatelessWidget {
                     color: Colors.black54,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: screenWidth * 0.02),
                 Text(
                   berita.tanggal,
                   style: TextStyle(

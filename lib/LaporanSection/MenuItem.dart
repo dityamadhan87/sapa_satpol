@@ -1,6 +1,8 @@
+import 'package:first_flutter/LaporanSection/MenuDimension.dart';
 import 'package:flutter/material.dart';
 
 class MenuItem extends StatelessWidget {
+  final MenuDimensions dimensions;
   final IconData icon;
   final String label;
   final VoidCallback onTap;
@@ -8,6 +10,7 @@ class MenuItem extends StatelessWidget {
 
   const MenuItem({
     super.key,
+    required this.dimensions,
     required this.icon,
     required this.label,
     required this.onTap,
@@ -16,9 +19,6 @@ class MenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
     final Color activeColor = const Color(0xFF9C9C85);
     final Color inactiveColor = const Color(0xFF9C9C85).withAlpha(80);
     final Color inActiveTextColor = const Color(0xFF9C9C85).withAlpha(150);
@@ -29,8 +29,8 @@ class MenuItem extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: screenWidth * 0.15,
-            height: screenWidth * 0.15,
+            width: dimensions.containerSize,
+            height: dimensions.containerSize,
             decoration: BoxDecoration(
               color: isActive ? activeColor : inactiveColor,
               shape: BoxShape.circle,
@@ -38,19 +38,18 @@ class MenuItem extends StatelessWidget {
             child: Center(
               child: Icon(
                 icon,
-                size: screenWidth * 0.1,
+                size: dimensions.iconSize,
                 color: Colors.white,
               ),
             ),
           ),
-          SizedBox(height: screenHeight * 0.015),
+          SizedBox(height: dimensions.spacing),
           SizedBox(
-            width: screenWidth * 0.25,
             child: Text(
               label,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: screenWidth * 0.035,
+                fontSize: dimensions.fontSize,
                 color: isActive ? activeColor : inActiveTextColor,
                 fontWeight: FontWeight.bold,
               ),

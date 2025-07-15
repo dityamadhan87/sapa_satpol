@@ -1,30 +1,55 @@
 import 'package:flutter/material.dart';
 
-class FullWidthButton extends StatelessWidget {
+class FullWidthButton extends StatefulWidget {
   final String label;
+  final VoidCallback onTap;
 
-  const FullWidthButton({super.key, required this.label});
+  const FullWidthButton({
+    super.key,
+    required this.label,
+    required this.onTap,
+  });
+
+  @override
+  State<FullWidthButton> createState() => _FullWidthButtonState();
+}
+
+class _FullWidthButtonState extends State<FullWidthButton> {
+  bool _isPressed = false;
+
+  void _handleTapDown(TapDownDetails details) {
+    setState(() => _isPressed = true);
+  }
+
+  void _handleTapUp(TapUpDetails details) {
+    setState(() => _isPressed = false);
+    widget.onTap();
+  }
+
+  void _handleTapCancel() {
+    setState(() => _isPressed = false);
+  }
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
-    return InkWell(
-      onTap: () {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(label)));
-      },
-      child: Container(
+    return GestureDetector(
+      onTapDown: _handleTapDown,
+      onTapUp: _handleTapUp,
+      onTapCancel: _handleTapCancel,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 100),
         padding: EdgeInsets.symmetric(
           vertical: screenWidth * 0.05,
+          horizontal: screenWidth * 0.08,
         ),
-        decoration: const BoxDecoration(
-          color: Colors.white, // putih, sama dengan background halaman
+        decoration: BoxDecoration(
+          color: _isPressed ? Colors.grey.shade300 : Colors.white,
           border: Border(
             bottom: BorderSide(
-              color: Colors.blueGrey, // warna border bawah
-              width: 1,               // ketebalan border bawah
+              color: Colors.blueGrey,
+              width: screenWidth * 0.002,
             ),
           ),
         ),
@@ -32,7 +57,7 @@ class FullWidthButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              label,
+              widget.label,
               style: TextStyle(
                 fontSize: screenWidth * 0.04,
                 color: Colors.black87,

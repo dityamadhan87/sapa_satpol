@@ -33,8 +33,8 @@ class BeritaHighlight extends StatelessWidget {
               builder: (context) {
                 final orientation = MediaQuery.of(context).orientation;
                 final imageHeight = orientation == Orientation.portrait
-                    ? screenHeight * 0.23
-                    : screenHeight * 0.63;
+                    ? screenWidth * 0.42
+                    : screenWidth * 0.52;
 
                 return Image.asset(
                   berita.imagePath,
@@ -57,7 +57,9 @@ class BeritaHighlight extends StatelessWidget {
                     fontSize: screenWidth * 0.045,
                   ),
                 ),
-                const SizedBox(height: 4),
+
+                SizedBox(height: screenWidth * 0.02),
+
                 Text(
                   berita.deskripsi,
                   style: TextStyle(
@@ -65,7 +67,9 @@ class BeritaHighlight extends StatelessWidget {
                     color: Colors.black54,
                   ),
                 ),
-                const SizedBox(height: 4),
+
+                SizedBox(height: screenWidth * 0.02),
+                
                 Text(
                   berita.tanggal,
                   style: TextStyle(

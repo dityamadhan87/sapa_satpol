@@ -11,7 +11,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -22,9 +21,9 @@ class HomePage extends StatelessWidget {
             Container(
               color: const Color(0xFF646452),
               padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top + screenHeight * 0.07,
+                top: MediaQuery.of(context).padding.top + screenWidth * 0.1,
                 bottom:
-                    MediaQuery.of(context).padding.bottom + screenHeight * 0.04,
+                    MediaQuery.of(context).padding.bottom + screenWidth * 0.1,
               ),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
@@ -39,7 +38,7 @@ class HomePage extends StatelessWidget {
                       },
                     ),
 
-                    SizedBox(height: screenHeight * 0.04),
+                    SizedBox(height: screenWidth * 0.05),
 
                     // Kotak info
                     const InfoBox(),
@@ -64,7 +63,7 @@ class HomePage extends StatelessWidget {
                       color: Colors.black87,
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.02),
+                  SizedBox(height: screenWidth * 0.03),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -87,7 +86,7 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
 
-                  SizedBox(height: screenHeight * 0.04),
+                  SizedBox(height: screenWidth * 0.05),
 
                   Text(
                     'Informasi Terbaru',
@@ -98,16 +97,20 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(height: screenHeight * 0.02),
+                  SizedBox(height: screenWidth * 0.03),
 
                   // Berita Highlight
                   BeritaHighlight(berita: beritaHighlight),
 
-                  SizedBox(height: screenHeight * 0.04),
+                  SizedBox(height: screenWidth * 0.07),
 
                   Column(
                     children: daftarBeritaLainnya
                         .map((b) => BeritaItem(berita: b))
+                        .expand((widget) => [
+                          widget,
+                          SizedBox(height: screenWidth * 0.04), 
+                        ])
                         .toList(),
                   ),
                 ],
