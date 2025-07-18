@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
-class LabelledTextField extends StatelessWidget {
+class LabelledTextField extends StatefulWidget {
   final String label;
   final double screenWidth;
   final String hintText;
   final bool isPortrait;
   final bool obscureText;
+  final String? Function(String?)? validator;
+  final TextEditingController? controller;
+  final String? infoText;
 
   const LabelledTextField({
     super.key,
@@ -14,7 +17,23 @@ class LabelledTextField extends StatelessWidget {
     required this.hintText,
     required this.isPortrait,
     required this.obscureText,
+    this.validator,
+    this.controller,
+    this.infoText,
   });
+
+  @override
+  State<LabelledTextField> createState() => _LabelledTextFieldState();
+}
+
+class _LabelledTextFieldState extends State<LabelledTextField> {
+  late bool _obscureText;
+
+  @override
+  void initState() {
+    super.initState();
+    _obscureText = widget.obscureText;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,38 +42,65 @@ class LabelledTextField extends StatelessWidget {
       children: [
         Text.rich(
           TextSpan(
-            text: label,
+            text: widget.label,
             children: [
               TextSpan(
                 text: ' *',
                 style: TextStyle(
                   color: Colors.red,
-                  fontSize: screenWidth * 0.035,
+                  fontSize: widget.screenWidth * 0.035,
                 ),
               ),
             ],
           ),
           style: TextStyle(
-            fontSize: screenWidth * 0.04,
-            fontWeight: FontWeight.w600,
+            fontSize: widget.screenWidth * 0.04,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: screenWidth * 0.015),
-        TextField(
-          obscureText: obscureText,
-          style: TextStyle(fontSize: screenWidth * 0.035),
+        SizedBox(height: widget.screenWidth * 0.015),
+        TextFormField(
+          controller: widget.controller,
+          obscureText: _obscureText,
+          autovalidateMode: AutovalidateMode.onUserInteraction, // ✅ Real-time validation
+          style: TextStyle(fontSize: widget.screenWidth * 0.035),
+          validator: widget.validator,
           decoration: InputDecoration(
-            hintText: hintText,
-            hintStyle: TextStyle(fontSize: screenWidth * 0.035),
+            hintText: widget.hintText,
+            hintStyle: TextStyle(fontSize: widget.screenWidth * 0.035),
             contentPadding: EdgeInsets.symmetric(
-              vertical: (isPortrait ? screenWidth * 0.02 : screenWidth * 0.03),
-              horizontal: screenWidth * 0.04,
+              vertical: (widget.isPortrait ? widget.screenWidth * 0.02 : widget.screenWidth * 0.03),
+              horizontal: widget.screenWidth * 0.04,
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(screenWidth * 0.03),
+              borderRadius: BorderRadius.circular(widget.screenWidth * 0.03),
             ),
+            suffixIcon: widget.obscureText
+                ? IconButton(
+                    icon: Icon(
+                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscureText = !_obscureText;
+                      });
+                    },
+                  )
+                : null,
           ),
         ),
+        if (widget.infoText != null)
+          Padding(
+            padding: EdgeInsets.only(top: widget.screenWidth * 0.015),
+            child: Text(
+              widget.infoText!,
+              style: TextStyle(
+                fontSize: widget.screenWidth * 0.03,
+                color: Colors.grey[600],
+              ),
+            ),
+          ),
       ],
     );
   }

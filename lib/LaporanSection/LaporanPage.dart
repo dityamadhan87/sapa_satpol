@@ -124,6 +124,7 @@ class _LaporanPageState extends State<LaporanPage> {
             FullWidthButton(
               label: 'Kransos',
               onTap: () {
+                Navigator.pushNamed(context, '/laporan/kransos');
               },
             ),
             FullWidthButton(

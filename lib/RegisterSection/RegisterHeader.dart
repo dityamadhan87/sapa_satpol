@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class RegisterSection extends StatelessWidget {
+class RegisterHeader extends StatelessWidget {
   final bool isPortrait;
   final double screenWidth;
   final double screenHeight;
 
-  const RegisterSection({
+  const RegisterHeader({
     super.key,
     required this.isPortrait,
     required this.screenWidth,

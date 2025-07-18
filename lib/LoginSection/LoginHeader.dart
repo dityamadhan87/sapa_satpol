@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HeaderSection extends StatelessWidget {
+class LoginHeader extends StatelessWidget {
   final bool isPortrait;
   final double screenWidth;
 
-  const HeaderSection({
+  const LoginHeader({
     super.key,
     required this.isPortrait,
     required this.screenWidth,

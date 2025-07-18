@@ -12,7 +12,7 @@ class MainNav extends StatefulWidget {
 }
 
 class _MainNavState extends State<MainNav> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
 
   final List<Widget> _pages = [
     HomePage(),
@@ -30,12 +30,13 @@ class _MainNavState extends State<MainNav> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     final isPotrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
     
     final iconSize = isPotrait ? screenWidth * 0.07 : screenWidth * 0.038;
     final fontSize = isPotrait ? screenWidth * 0.035 : screenWidth * 0.015;
-    final navBarHeight = isPotrait ? screenWidth * 0.18 : screenWidth * 0.08;
+    final navBarHeight = isPotrait ? screenHeight * 0.09 : screenWidth * 0.09;
 
     return Scaffold(
       body: IndexedStack(index: _selectedIndex, children: _pages),
