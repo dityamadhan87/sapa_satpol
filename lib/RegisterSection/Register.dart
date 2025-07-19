@@ -6,6 +6,8 @@ import 'package:first_flutter/RegisterSection/SuccessfulOverlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'package:first_flutter/Services/LoginAPI.dart';
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -167,26 +169,49 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               if (_formKey.currentState!.validate()) {
                                 setState(() {
                                   _isLoading = true;
+                                  _isSuccessful = false;
                                 });
 
-                                await Future.delayed(const Duration(seconds: 5));
+                                try {
+                                  // Call real register API
+                                  final isSuccess = await AuthService().register(
+                                    emailController.text,
+                                    passwordController.text,
+                                    nameController.text, // Make sure you have nameController
+                                  );
 
-                                setState(() {
-                                  _isLoading = false;
-                                });
+                                  setState(() {
+                                    _isLoading = false;
+                                    _isSuccessful = isSuccess;
+                                  });
 
-                                setState(() {
-                                  _isSuccessful = true;
-                                });
+                                  if (isSuccess) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text('Registrasi berhasil')),
+                                    );
+                                    Navigator.pushReplacementNamed(context, '/login');
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text('Registrasi gagal, cek kembali data Anda')),
+                                    );
+                                  }
+                                } catch (e) {
+                                  setState(() {
+                                    _isLoading = false;
+                                  });
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('Terjadi kesalahan: $e')),
+                                  );
+                                }
                               }
                             },
-                            height: isPortrait
-                                ? screenWidth * 0.13
-                                : screenWidth * 0.09,
+                            height: isPortrait ? screenWidth * 0.13 : screenWidth * 0.09,
                             borderRadius: screenWidth * 0.03,
                             fontSize: screenWidth * 0.045,
                             backgroundColor: const Color(0xFF646452),
                           ),
+
 
                           SizedBox(height: screenWidth * 0.05),
 
