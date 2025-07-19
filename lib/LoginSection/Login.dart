@@ -4,6 +4,8 @@ import 'package:first_flutter/Components/LabelledTextField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'package:first_flutter/services/LoginAPI.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -118,11 +120,29 @@ class _LoginPageState extends State<LoginPage> {
                       CustomButton(
                         isOutlined: false,
                         label: 'Login',
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            Navigator.pushReplacementNamed(context, '/home');
+                        onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          try {
+                            final authService = AuthService();
+                            final token = await authService.login(
+                              emailController.text,
+                              passwordController.text,
+                            );
+                            if (token != null) {
+                              Navigator.pushReplacementNamed(context, '/home');
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Login gagal. Cek email dan password.')),
+                              );
+                            }
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Terjadi kesalahan: $e')),
+                            );
                           }
-                        },
+                        }
+                      }
+                      ,
                         height:
                             isPortrait ? screenWidth * 0.13 : screenWidth * 0.09,
                         borderRadius: screenWidth * 0.03,
